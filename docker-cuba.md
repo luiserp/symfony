@@ -66,3 +66,23 @@
 6. Etiquetar una imagen
 
     - `docker tag`
+
+
+# Descargar Imagesnes para gardar offline
+
+Desde Github
+
+    En la página de releases en Github https://github.com/jadolg/DockerImageSave/releases escoge el binario correspondiente a tu sistema operativo (Linux/Windows/MacOS(Darwin))
+    En el caso de Linux y MacOS dale permisos de ejecución al fichero
+
+## Descargar una imagen
+
+Como ejemplo vamos a descargar la imagen de Alpine linux con el tag 3.9 DockerImageSave -i alpine:3.9
+
+Este comando descargará la imagen en el directorio actual.
+
+unzip alpine_3.9.tar.zip
+
+docker load -i alpine\:3.9.tar
+
+docker images

@@ -79,3 +79,13 @@
     - `symfony var:export`
         * Lista las variables de entorno, se deben ver las credenciales de postgres.
 
+## Paso 8 Definiendo la estrructura de datos
+
+1. `composer require orm`
+    - Instalar el paquete Doctrine:
+        * Doctrine DBAl: Utilidad para conexion con diferentes motores de BBDD.
+        * Doctrine ORM: Manipulacion de datos mediante objetos.
+        * Doctrine Migrations: Sincronizar las tablas y sus cambios.
+
+Con esta instalacion se crean varios archivos de configuracion en la carpeta config. Se crea la carpeta 'migrations' donde vana a parar las clases de migracion. Y en 'src' las carpetas 'Entity', donde se definen las clases que seran las entidades de nuestra BD y 'Repository' donde estaran las clases encargadas de centralizar las sentencias sql que se realizarn.
+
