@@ -110,3 +110,9 @@
     - `symfony console doctrine:schema:create --dump-sql`: Muestra la consulta sql a ejecutar.
     - `symfony console make:migration`: Crea el archivo de migracion en la carpeta *"migrations"*, con los cambios que se realizaran al aplicar la migracion y al quitarla.
     - `symfony console doctrine:migrations:migrate`: Aplica la migracion.
+
+## Paso 9 Configurar el panel de administracion.
+
+1. `symfony composer require "admin:^2.0"`: Instala una version superior a la 2.0 pero inferior a la 3.0. La 3.0 trae mayor soporte pero el libro esta hecho utilizando la version 2.0. Creando los siguientes elementos:
+    - *config/pakages/easy_admin.yaml* donde se deben identificar las entidades a ser administradas mediante el panel de administracion.
+        * Tiene una sintaxis espacifica con la que se puede personalizar la forma en que se tratan los datos y son representados.
