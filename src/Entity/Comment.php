@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ComentRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ComentRepository::class)
+ * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
-class Coment
+class Comment
 {
     /**
      * @ORM\Id

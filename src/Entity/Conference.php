@@ -35,9 +35,10 @@ class Conference
     private $isInternational;
 
     /**
-     * @ORM\OneToMany(targetEntity=Coment::class, mappedBy="conference", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="conference", orphanRemoval=true)
      */
     private $comments;
+
 
     public function __construct()
     {
@@ -86,14 +87,14 @@ class Conference
     }
 
     /**
-     * @return Collection|Coment[]
+     * @return Collection|Comment[]
      */
     public function getComments(): Collection
     {
         return $this->comments;
     }
 
-    public function addComment(Coment $comment): self
+    public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
@@ -103,7 +104,7 @@ class Conference
         return $this;
     }
 
-    public function removeComment(Coment $comment): self
+    public function removeComment(Comment $comment): self
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
@@ -114,4 +115,5 @@ class Conference
 
         return $this;
     }
+
 }

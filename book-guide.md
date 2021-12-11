@@ -87,5 +87,26 @@
         * Doctrine ORM: Manipulacion de datos mediante objetos.
         * Doctrine Migrations: Sincronizar las tablas y sus cambios.
 
-Con esta instalacion se crean varios archivos de configuracion en la carpeta config. Se crea la carpeta 'migrations' donde vana a parar las clases de migracion. Y en 'src' las carpetas 'Entity', donde se definen las clases que seran las entidades de nuestra BD y 'Repository' donde estaran las clases encargadas de centralizar las sentencias sql que se realizarn.
+    - Con esta instalacion se crean varios archivos de configuracion en la carpeta config:
+        * doctrine_migrations.yaml
+        * doctrine.yaml
 
+    - Se crea la carpeta 'migrations' donde vana a parar las clases de migracion.
+    - Se crea en 'src' las carpetas:
+        * Entity: donde se definen las clases que seran las entidades de nuestra BD.
+        * 'Repository' donde estaran las clases encargadas de centralizar las sentencias sql que se realizarn.
+    - En el archivo .env se crea la variable de entorno:
+        * DATABASE_URL: Con la informacion necesaria para la conexion con la base de datos.
+
+2. Actualizar la url de la BBDD.
+    1. Una vez levantado el servidor de BD con docker: `docker-compose start`
+    2. `symfony var:export` Lista la variable DATABASE_URL.
+    3. La copiamos y actualizamos este valor en el archivo .env.
+        * Como el valor del puerto en docker puede cambiar puede ser necesario tener que volver a actualizar este valor. Una solocion es anteponer nuestros comandos con **symfony**(ya conoce las variables de entorno).
+
+3. Para crear las entidades y tablas en la BBDD.
+    - `symfony console make:entity`: Crea entidades mediante un proceso al que se le dan los datos necesarios.
+        * Si queremos añadir mas campos a una entidad existente se llama por su nombre, detecta que ya existe y empieza el proceso.
+    - `symfony console doctrine:schema:create --dump-sql`: Muestra la consulta sql a ejecutar.
+    - `symfony console make:migration`: Crea el archivo de migracion en la carpeta *"migrations"*, con los cambios que se realizaran al aplicar la migracion y al quitarla.
+    - `symfony console doctrine:migrations:migrate`: Aplica la migracion.
