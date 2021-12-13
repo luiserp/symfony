@@ -4,6 +4,12 @@
 
 {% block body %}
 
-    <h1>Hello {{name}}</h1>    
-    <img src="/images/under-construction.gif" alt="">
+    <h2>Give you feedback!</h2>
+
+    <ul>
+    {% for conference in conferences %}
+        <li>{{ conference }} <a href="{{ path('conference', { id: conference.id} ) }}">View</a></li>    
+    {% endfor %}
+    </ul>
+
 {% endblock %}

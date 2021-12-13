@@ -116,3 +116,11 @@
 1. `symfony composer require "admin:^2.0"`: Instala una version superior a la 2.0 pero inferior a la 3.0. La 3.0 trae mayor soporte pero el libro esta hecho utilizando la version 2.0. Creando los siguientes elementos:
     - *config/pakages/easy_admin.yaml* donde se deben identificar las entidades a ser administradas mediante el panel de administracion.
         * Tiene una sintaxis espacifica con la que se puede personalizar la forma en que se tratan los datos y son representados.
+
+## Paso 10 Construyendo la interface de usuario.
+
+1. `symfony composer require twig`: Ya deberia estar instalado el motor de plantillas twig, pero para ponerlo como dependencia del proyecto se utiliza el comando.
+
+2. Los demas pasos se visualizan en el archivo *"src/Controller/ConferenceController.php"*(seccion Paso 10), index.html.twig, show.html.twig y CommentRepository(metodo getCommentPaginator).
+
+3. `symfony composer require twig/intl-extra`: Agrega filtros y funcionalidades para las plantillas.
