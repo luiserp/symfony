@@ -124,3 +124,12 @@
 2. Los demas pasos se visualizan en el archivo *"src/Controller/ConferenceController.php"*(seccion Paso 10), index.html.twig, show.html.twig y CommentRepository(metodo getCommentPaginator).
 
 3. `symfony composer require twig/intl-extra`: Agrega filtros y funcionalidades para las plantillas.
+
+## Paso 11 Almacenando sesiones.
+
+1. En un controlador, pasar un objeto de tipo **SessionInterface**.
+    * `function (SessionInterface $session){...}`
+2. Para establecer una sesion:
+    * `$session->set('clave', 'valor');`
+3. Para acceder a una sesion:
+    * `$session->get('clave');`

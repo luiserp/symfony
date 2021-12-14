@@ -8,6 +8,7 @@ use App\Repository\ConferenceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ConferenceController extends AbstractController
@@ -19,11 +20,17 @@ class ConferenceController extends AbstractController
     /**
      * @Route("/", name="homepage")
      */
-    public function index(ConferenceRepository $conferenceRepository): Response
+    public function index(ConferenceRepository $conferenceRepository, SessionInterface $session): Response
     {
         /*El parametro conferenceRepository es el repositorio de conferencias creado junto con
         las entidades. Funciona como un servicio que provee funcionalidades para acceer a la BD.        
         */
+
+        // SECCION
+        // PASO 11 SESIONES
+        // $session->set('prueba','hello-world');
+        // dump($session->get('prueba'));
+
         $conferences = $conferenceRepository->findAll();
         return $this->render('conference/index.html.twig', [ 'conferences' => $conferences ]);
 
