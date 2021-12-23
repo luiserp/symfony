@@ -8,7 +8,7 @@
 
     <ul>
     {% for conference in conferences %}
-        <li>{{ conference }} <a href="{{ path('conference', { id: conference.id} ) }}">View</a></li>    
+        <li>{{ conference }} <a href="{{ path('conference', { slug: conference.slug} ) }}">View</a></li>    
     {% endfor %}
     </ul>
 

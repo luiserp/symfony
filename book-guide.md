@@ -136,7 +136,46 @@
 
 ## Paso 12 - Escuchando eventos (events and subscribers)
 
-1. `symfony console make:subscriber` : Crea un subscriber, se de pasa el nombre y el evento al que se va a subscribir. TODO(Estudiar mas sobre los distintos eventos)
+1. `symfony console make:subscriber` : Crea un subscriber, se de pasa el nombre y el evento al que se va a subscribir. 
 
 2. EN la carpeta src/EventSubscriber se crean los enventos, la funcionalidad se programa en le metodo **onControllerEvent**, ver ejemplo *TwigEventSubscriber.php*
 
+TODO(Estudiar mas sobre los distintos eventos de symfony)
+
+## Paso 13 - Gestionando el ciclo de vida de los objetos de doctrine.
+
+Podemos ejecutar acciones al ocurrir determinados eventos de doctrine, para ello a la clase entidad en cuestion se le debe agregar un decorador al nombre de la clase. `@ORM\HasLifecycleCallbacks()` y un metodo con un decorador en correspondencia al momento en que se debe ejecutar el metodo(antes|despues de crear|actualizar). Alguno de los decoradores son:
+
+* `@ORM\PrePersist`
+* `@ORM\PostPersist`
+* `@ORM\PreUpdate`
+* `@ORM\PostUpdate`
+
+TODO(Estudiar mas sobre los distintos eventos de Doctrine)
+
+### Agregando slug a la a la URL(Representacion legible del objeto, en lugar de hacerlo por ID)
+
+1. `symfony console make:Entity Conference`: Añadir propiedad slug a la entidad de conferencia.
+
+2. `symfony console make:migration`: Crea el archivo de migracion con los cambios de la entidad.
+    * No podemos aplicar la migracion tal cual debido a que slug es NOT_NULL y la tabla ya tiene datos, hay que modificar la consulta a ser aplicada en el archivo de migracion.
+        - Revisar los cambios aplicados en el archivo */migrations/Version20211223175428.php*
+
+3. `symfony console doctrine:migrations:migrate` Aplicando la migracion.
+
+4. Modificar el decorador de la propiedad slug en la entidad Conference: `@ORM\Column(type="string", length=255, unique=true)` y el decorador de la clase `@UniqueEntity("slug")`(Este es un decorador de symfony, no de doctrine, para impedir que la app mande los datos a la BD antes de validarlo.).
+
+5. `symfony console make:migration` y `symfony console doctrine:migrations:migrate`
+
+6. `symfony composer require string`: Bundle para el trabajo con strings, ya trae incorporada funcionalidad de slugs.
+
+7. Añadir metodo *computeSlug* a la entidad de conferencia.(Ver codigo) 
+
+8. Crear un Listener que asigne el slug a las conferencias antes de insertar o modificarla.
+    * Crear carpeta *EventListener* dentro de src.
+    * Dentro crear archivo *ConferenceEntityListener.php* con la clase `ConferenceEntityListener` y los metodos prePersist y preUpdate que llaman al metodo computeSlug de la conferencia.
+
+9. Actualizar el archivo services.yaml para hacer funcionar nuestro listener.
+    * Con estos cambios le decimos que la clase encargada de detectar cuando se disparen los eventos de `prePersist` y `preUpdate` sobre un objeto de conferencia es `ConferenceEntityListener`
+
+10. Modificar el controlador y las plantillas para que ahora se use el slug para navegar y no el id.
