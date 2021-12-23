@@ -133,3 +133,10 @@
     * `$session->set('clave', 'valor');`
 3. Para acceder a una sesion:
     * `$session->get('clave');`
+
+## Paso 12 - Escuchando eventos (events and subscribers)
+
+1. `symfony console make:subscriber` : Crea un subscriber, se de pasa el nombre y el evento al que se va a subscribir. TODO(Estudiar mas sobre los distintos eventos)
+
+2. EN la carpeta src/EventSubscriber se crean los enventos, la funcionalidad se programa en le metodo **onControllerEvent**, ver ejemplo *TwigEventSubscriber.php*
+
