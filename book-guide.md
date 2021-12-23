@@ -179,3 +179,19 @@ TODO(Estudiar mas sobre los distintos eventos de Doctrine)
     * Con estos cambios le decimos que la clase encargada de detectar cuando se disparen los eventos de `prePersist` y `preUpdate` sobre un objeto de conferencia es `ConferenceEntityListener`
 
 10. Modificar el controlador y las plantillas para que ahora se use el slug para navegar y no el id.
+
+## Paso 14 - Formularios
+1. `symfony console make:form`: Crea una clase formulario en src/Form, pide el nombre y la entidad que sera manejada mediante el mismo.
+
+2. Configurar el controlador para que muestre y procese el formulario, symfony permite que se use el mismo controlador para las 2s cosas.(Ver codigo seccion paso 14 en *src/Controller/ConferenceController.php*)
+
+3. En la plantilla mostrar el formulario mediante la funcion `{{form(nombre_del_formulario)}}`
+
+4. En la clase del formulario antes hecha se pueden modificar los campos.
+
+5. Crear las validaciones de los formularios, se puede hacer mediante anotaciones en los campos de las entidades, las que ya tienen son para las restricciones de la BD, para los formularios estan las assert:
+    * `@Assert\NotBlank`
+    * `@Assert\Email`
+
+TODO(Ver mas sobre personalizacion de formularios en symfony)
+TODO(Ver mas sobre validaciones de formularios en symfony)

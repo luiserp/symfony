@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Conference;
+use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
 use App\Repository\ConferenceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConferenceController extends AbstractController
 {
+
+    // PASO 14
+    // Para hacer persistentes los datos de los formulario hace falta el administrador de entidades.
+    private $entityManager;
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
 
     // SECCION 
     // PASO 10
@@ -45,6 +56,26 @@ class ConferenceController extends AbstractController
     public function show(Request $request ,CommentRepository $commentRepository, Conference $conference)
     {
 
+        // SECCION
+        // PASO 14
+
+        $comment = new Comment(); //Creamos la entidad que contendra los datos
+        $form = $this->createForm(CommentFormType::class, $comment); //Creamos el formulario y le pasamos la entidad en la cual seran cargados los datos del formulario.
+
+        $form->handleRequest($request);
+
+        if( $form->isSubmitted() && $form->isValid()){
+            
+            $comment->setConference($conference);
+            $this->entityManager->persist($comment);
+            $this->entityManager->flush();
+
+            // Una ves que se enviaron los datos y son procesados se redirecciona a la misma pagina donde se visualizan los comentarios, esto evita que al usuario recargar la pagina se reenvien los mosmos datos.
+            return $this->redirectToRoute('conference', ['slug'=> $conference->getSlug()] );
+
+        }
+
+
         // Paginacion
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
@@ -64,7 +95,8 @@ class ConferenceController extends AbstractController
                 'conference' => $conference,
                 'comments' => $paginator,
                 'previus' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
-                'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE)
+                'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
+                'comment_form' => $form->createView(), //PASO 14
             ]
         );
 
