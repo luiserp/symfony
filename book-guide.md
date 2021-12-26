@@ -206,3 +206,26 @@ TODO(Ver mas sobre validaciones de formularios en symfony)
     * La variable **$photoDir** esta definida en el archivo *config/services.yaml*
 
 4. Configurar archivo *config/packages/easy_admin.yaml* con el campo de la foto.
+
+## Paso 15 - Asegurando el panel de administración
+
+1. `symfony console make:user admin`: Crea una entidad de tipo usuario(Es mejor manejar las entidades usuario mediante esta forma).
+2. `symfony console make:migration` y `symfony console doctrine:migrations:migrate`
+3. `symfony console security:encode-password`: Encripta la contraseña 
+4. `symfony run psql -c "INSERT INTO admin (id, username, roles, password) \`
+    `VALUES (nextval('admin_id_seq'), 'admin', '[\"ROLE_ADMIN\"]', \`
+    `'\$argon2id\$v=19\$m=65536,t=4,p=1\$wL51SSMLeu1epaKnUJzBfA\$VEam6XJyei7A6K12JI/asHi/ruTk08qrSKSaO0r0b9c')"`: Insertar el usuario **admin** con contraseña **123456**.
+
+5. `symfony console make:auth`
+    * Actualiza la configuracion de seguridad en *config/security.yaml*
+    * Crea el autenticador en *src/Securrity/AppAuthenticator.php*(El nombre depende del valor introducido).
+    * Crea la plantilla de login *template/security*
+    * Crea el controlador encargado de mostrar la pantalla de login *Controller/SecurityController.php*(El nombre depende del valor introducido).
+
+6. En el archivo *src/Securrity/AppAuthenticator.php* modificar el resultado del metodo `onAuthenticationSuccess` para que retorne una redireccion al panel de administrador.(Lugar que se pretende proteger)
+
+7. `symfony console debug:router`: Puedes verificar que la ruta esta activa.
+    * Hasta aqui esta configurada la autenticacion.
+
+8. Modificar el archivo *config/security.yaml* para especificar que solo los usuarios con rol ROLE_ADMIN pueden entrar al panel.
+    * Con esto se confiura la autorizacion.
