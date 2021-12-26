@@ -195,3 +195,14 @@ TODO(Estudiar mas sobre los distintos eventos de Doctrine)
 
 TODO(Ver mas sobre personalizacion de formularios en symfony)
 TODO(Ver mas sobre validaciones de formularios en symfony)
+
+### Subiendo archivos.
+1. Modificar el formulario y agregarle un campo de tipo **FileType**
+
+2. Como lo que sera guardado en la BD es el nombre del archivo en los ajustes del formulario se debe poner que el archivo no esta mapeado en la entidad, ademas de una restriccion en este caso para la imagen y el peso(Ver codigo *src/Form/CommentFormType.php*)
+
+3. Procesar la imagen desde el controlador(Ver codigo de la seccion en el controlador.) 
+    * `composer require symfony/mime` Debe esstar instalado para que funcione.
+    * La variable **$photoDir** esta definida en el archivo *config/services.yaml*
+
+4. Configurar archivo *config/packages/easy_admin.yaml* con el campo de la foto.
